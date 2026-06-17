@@ -3,6 +3,7 @@
   import { slide, fly } from "svelte/transition";
   import Redbull from "$lib/redbull.svelte";
   import Picker from "$lib/picker.svelte";
+  let { data } = $props();
 </script>
 
 <div class="bg-bg min-h-screen flex flex-col p-8">
@@ -14,4 +15,9 @@
     <h2 class="text-xl text-text">Today's Red Bulls: {0}</h2>
   </div>
   <Picker />
+  <ul>
+    {#each data.events as event}
+      <li>{event.label}|| {event.sf}|| {event.createdAt} || {event.id}</li>
+    {/each}
+  </ul>
 </div>
