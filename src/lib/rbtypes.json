@@ -1,10 +1,46 @@
 [
   {
     "label": "redbull",
-    "sf": true
+    "sf": false
   },
   {
-    "label": "redbull",
+    "label": "peach",
+    "sf": false
+  },
+  {
+    "label": "coconut",
+    "sf": false
+  },
+  {
+    "label": "spring",
+    "sf": false
+  },
+  {
+    "label": "seablue",
+    "sf": false
+  },
+  {
+    "label": "amber",
+    "sf": false
+  },
+  {
+    "label": "yellow",
+    "sf": false
+  },
+  {
+    "label": "summer",
+    "sf": false
+  },
+  {
+    "label": "red",
+    "sf": false
+  },
+  {
+    "label": "pink",
+    "sf": false
+  },
+  {
+    "label": "iced",
     "sf": false
   },
   {
@@ -12,39 +48,47 @@
     "sf": true
   },
   {
-    "label": "redbull",
-    "sf": false
-  },
-  {
-    "label": "redbull",
+    "label": "peach",
     "sf": true
   },
   {
-    "label": "redbull",
-    "sf": false
-  },
-  {
-    "label": "redbull",
+    "label": "coconut",
     "sf": true
   },
   {
-    "label": "redbull",
-    "sf": false
-  },
-  {
-    "label": "redbull",
+    "label": "spring",
     "sf": true
   },
   {
-    "label": "redbull",
-    "sf": false
-  },
-  {
-    "label": "redbull",
+    "label": "seablue",
     "sf": true
   },
   {
-    "label": "redbull",
-    "sf": false
+    "label": "amber",
+    "sf": true
+  },
+  {
+    "label": "yellow",
+    "sf": true
+  },
+  {
+    "label": "summer",
+    "sf": true
+  },
+  {
+    "label": "red",
+    "sf": true
+  },
+  {
+    "label": "pink",
+    "sf": true
+  },
+  {
+    "label": "iced",
+    "sf": true
+  },
+  {
+    "label": "zero",
+    "sf": true
   }
 ]

@@ -1,4 +1,5 @@
 import { db } from "$lib/server/db";
+import { eq } from "drizzle-orm";
 import { events } from "$lib/server/db/schema";
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from "@sveltejs/kit";
@@ -34,5 +35,12 @@ export const actions: Actions = {
       .returning();
 
     return { success: true, created };
+  },
+  delete: async ({ request }) => {
+    const form = await request.formData();
+    const id = Number(form.get('id'));
+    if (!Number.isFinite(id)) return fail(400, { error: "bad id" })
+    await db.delete(events).where(eq(events.id, id));
+    return { success: true };
   },
 };

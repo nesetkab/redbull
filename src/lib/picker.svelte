@@ -36,10 +36,11 @@
     <div
       in:slide={{ duration: 400 }}
       out:slide={{ duration: 400 }}
-      class="min-w-full flex-row flex bg-accent p-8 mt-4 rounded-2xl overflow-scroll gap-8"
+      class="min-w-full flex-row flex bg-accent p-8 mt-4 rounded-2xl overflow-scroll gap-2"
     >
       {#each rbtypes as rbtype}
         <Redbull
+          picker={true}
           label={rbtype.label}
           sf={rbtype.sf}
           onselect={() => {
