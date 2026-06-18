@@ -12,13 +12,6 @@
   let labelNorm =
     label.at(0)?.toUpperCase() + label.slice(1) + (sf ? " SF" : "");
   let labelPath = sf ? label + "sf" : label;
-
-  async function deleteOne(id: number) {
-    const form = new FormData();
-    form.set("id", String(id));
-    await fetch("?/delete", { method: "POST", body: form });
-    await invalidateAll();
-  }
 </script>
 
 {#if picker}
