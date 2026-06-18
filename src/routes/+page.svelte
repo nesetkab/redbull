@@ -1,10 +1,21 @@
-<script>
-  let open = $state(false);
+<script lang="ts">
   import { slide, fly } from "svelte/transition";
   import Redbull from "$lib/redbull.svelte";
   import Picker from "$lib/picker.svelte";
   import Shelf from "$lib/shelf.svelte";
+  let open = $state(false);
+
   let { data } = $props();
+  let todayCount = $derived(
+    data.events.filter((e) => isSameDate(e.createdAt, new Date())).length,
+  );
+  function isSameDate(a: Date, b: Date) {
+    return (
+      a.getMonth() == b.getMonth() &&
+      a.getDate() == b.getDate() &&
+      a.getFullYear() == b.getFullYear()
+    );
+  }
 </script>
 
 <div class="bg-bg min-h-screen flex flex-col p-8">
@@ -13,7 +24,9 @@
       <h1 class="text-4xl text-text font-bold">Red Bull Tracker</h1>
       <h2 class="text-xl text-text">to track how unhealthy i am :3</h2>
     </div>
-    <h2 class="text-xl text-text">Today's Red Bulls: {0}</h2>
+    <h2 class="text-xl text-text">
+      Today's Red Bulls: {todayCount}
+    </h2>
   </div>
   <Picker />
   <Shelf redbulls={data.events} />
