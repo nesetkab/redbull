@@ -1,11 +1,11 @@
 import { db } from "$lib/server/db";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { events } from "$lib/server/db/schema";
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async () => {
-  const allEvents = await db.select().from(events);
+  const allEvents = await db.select().from(events).orderBy(desc(events.createdAt));
   return { events: allEvents };
 };
 

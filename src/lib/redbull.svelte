@@ -9,9 +9,10 @@
   }
 
   let { label, sf, selected, picker, onselect, deleting }: Props = $props();
-  let labelNorm =
-    label.at(0)?.toUpperCase() + label.slice(1) + (sf ? " SF" : "");
-  let labelPath = sf ? label + "sf" : label;
+  let labelNorm = $derived(
+    label.at(0)?.toUpperCase() + label.slice(1) + (sf ? " SF" : ""),
+  );
+  let labelPath = $derived(sf ? label + "sf" : label);
 </script>
 
 {#if picker}
