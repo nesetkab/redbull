@@ -1,6 +1,5 @@
 <script lang="ts">
   import Redbull from "./redbull.svelte";
-  import { slide } from "svelte/transition";
   import { invalidateAll } from "$app/navigation";
 
   interface Props {
@@ -9,7 +8,6 @@
 
   let { redbulls }: Props = $props();
   let deleting = $state(false);
-  redbulls = redbulls.sort();
 
   async function deleteOne(id: number) {
     const form = new FormData();

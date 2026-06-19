@@ -1,9 +1,6 @@
 <script lang="ts">
-  import { slide, fly } from "svelte/transition";
-  import Redbull from "$lib/redbull.svelte";
   import Picker from "$lib/picker.svelte";
   import Shelf from "$lib/shelf.svelte";
-  let open = $state(false);
 
   let { data } = $props();
   let todayCount = $derived(

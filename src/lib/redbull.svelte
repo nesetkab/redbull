@@ -5,10 +5,23 @@
     selected?: boolean;
     picker: boolean;
     onselect?: () => void;
+    onplus?: () => void;
+    onminus?: () => void;
+    count?: number;
     deleting?: boolean;
   }
 
-  let { label, sf, selected, picker, onselect, deleting }: Props = $props();
+  let {
+    label,
+    sf,
+    selected,
+    picker,
+    onselect,
+    onplus,
+    onminus,
+    count,
+    deleting,
+  }: Props = $props();
   let labelNorm = $derived(
     label.at(0)?.toUpperCase() + label.slice(1) + (sf ? " SF" : ""),
   );
@@ -17,17 +30,35 @@
 
 {#if picker}
   <div>
-    <button
-      type="button"
-      class={[
-        "flex flex-col hover:cursor-pointer hover:-translate-y-4 transition-all overflow-visible",
-        selected && "-translate-y-4",
-      ]}
-      onclick={onselect}
+    <div
+      class={["flex flex-col justify-center items-center   overflow-visible"]}
     >
-      <img src="{labelPath}.svg" alt="redbull" class="max-w-26" />
-      <span class="text-text text-center">{labelNorm}</span>
-    </button>
+      <button
+        type="button"
+        class={[
+          "  hover:cursor-pointer transition-all",
+          selected && "-translate-y-4",
+          !selected && "hover:-translate-y-4",
+        ]}
+        onclick={onselect}
+        ><img src="{labelPath}.svg" alt="redbull" class="max-w-26" />
+      </button>
+      <div
+        class="bg-bg gap-2 text-text rounded-2xl max-w-fit justify-self-center flex flex-row"
+      >
+        <button
+          type="button"
+          class="bg-red-600 hover:cursor-pointer text-text px-2 rounded-2xl"
+          onclick={onminus}>-</button
+        >
+        {count}
+        <button
+          type="button"
+          class="bg-green-600 hover:cursor-pointer text-text px-2 rounded-2xl"
+          onclick={onplus}>+</button
+        >
+      </div>
+    </div>
   </div>
 {:else}
   <div>
