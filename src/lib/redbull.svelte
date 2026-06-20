@@ -37,32 +37,31 @@
         "flex flex-row justify-center items-center gap-0 max-w-fit  overflow-visible",
       ]}
     >
-      <button type="button"
-        ><img src="{labelPath}.svg" alt="redbull" class="max-w-26" />
-      </button>
+      <img src="{labelPath}.svg" alt="redbull" class="max-w-26" />
       <div
         class="-rotate-75 gap-2 -ml-12 flex flex-row max-w-fit justify-self-center"
       >
         <div class="bg-bg gap-2 text-text flex flex-row rounded-2xl">
           <button
             type="button"
-            class="bg-red-600 rotate-75 hover:cursor-pointer text-text px-2 rounded-2xl"
-            onclick={onminus}>-</button
+            class=" hover:cursor-pointer text-text min-w-fit"
+            onclick={onminus}
+            ><img src="minus.svg" alt="minus" class="max-w-6" /></button
           >
           <span class="rotate-75">{count}</span>
           <button
             type="button"
-            class="bg-green-600 rotate-75 hover:cursor-pointer text-text px-2 rounded-2xl"
-            onclick={onplus}>+</button
+            class=" hover:cursor-pointer text-text min-w-fit"
+            onclick={onplus}
+            ><img src="plus.svg" alt="plus" class="max-w-6" /></button
           >
         </div>
-        <button
-          type="button"
-          class={[
-            "bg-blue-400 px-1 text-text rounded-2xl rotate-75",
-            sf && "bg-blue-600",
-          ]}
-          onclick={onsf}>SF</button
+        <button type="button" class="hover:cursor-pointer" onclick={onsf}
+          ><img
+            src="{sf ? 'sf' : 's'}.svg"
+            alt="sugarfree toggle"
+            class="max-w-6"
+          /></button
         >
       </div>
     </div>
