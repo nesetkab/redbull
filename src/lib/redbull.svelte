@@ -2,7 +2,7 @@
   interface Props {
     label: string;
     sf: boolean;
-    selected?: boolean;
+    canToggleSf?: boolean;
     picker: boolean;
     onselect?: () => void;
     onplus?: () => void;
@@ -15,7 +15,7 @@
   let {
     label,
     sf,
-    selected,
+    canToggleSf,
     picker,
     onselect,
     onplus,
@@ -56,9 +56,12 @@
             ><img src="plus.svg" alt="plus" class="max-w-6" /></button
           >
         </div>
-        <button type="button" class="hover:cursor-pointer" onclick={onsf}
+        <button
+          type="button"
+          class={[canToggleSf && "hover:cursor-pointer", ""]}
+          onclick={onsf}
           ><img
-            src="{sf ? 'sf' : 's'}.svg"
+            src="{sf ? (canToggleSf ? 'sf' : 'sfhidden') : 's'}.svg"
             alt="sugarfree toggle"
             class="max-w-6"
           /></button

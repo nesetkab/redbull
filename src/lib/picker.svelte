@@ -79,7 +79,7 @@
           count={count(label)}
           onplus={() => plus(label)}
           onminus={() => minus(label)}
-          selected={count(label) > 0}
+          canToggleSf={label !== "zero"}
         />
       {/each}
     </div>
