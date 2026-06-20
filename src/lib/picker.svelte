@@ -50,6 +50,9 @@
           picker={true}
           label={rbtype.label}
           sf={rbtype.sf}
+          onsf={() => {
+            rbtype.sf = !rbtype.sf;
+          }}
           count={count(rbtype)}
           onselect={() => {
             const i = chosen.findIndex(

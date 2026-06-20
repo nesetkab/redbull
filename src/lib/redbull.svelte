@@ -7,6 +7,7 @@
     onselect?: () => void;
     onplus?: () => void;
     onminus?: () => void;
+    onsf?: () => void;
     count?: number;
     deleting?: boolean;
   }
@@ -19,6 +20,7 @@
     onselect,
     onplus,
     onminus,
+    onsf,
     count,
     deleting,
   }: Props = $props();
@@ -31,31 +33,36 @@
 {#if picker}
   <div>
     <div
-      class={["flex flex-col justify-center items-center   overflow-visible"]}
+      class={[
+        "flex flex-row justify-center items-center gap-0 max-w-fit  overflow-visible",
+      ]}
     >
-      <button
-        type="button"
-        class={[
-          "  hover:cursor-pointer transition-all",
-          selected && "-translate-y-4",
-          !selected && "hover:-translate-y-4",
-        ]}
-        onclick={onselect}
+      <button type="button"
         ><img src="{labelPath}.svg" alt="redbull" class="max-w-26" />
       </button>
       <div
-        class="bg-bg gap-2 text-text rounded-2xl max-w-fit justify-self-center flex flex-row"
+        class="-rotate-75 gap-2 -ml-12 flex flex-row max-w-fit justify-self-center"
       >
+        <div class="bg-bg gap-2 text-text flex flex-row rounded-2xl">
+          <button
+            type="button"
+            class="bg-red-600 rotate-75 hover:cursor-pointer text-text px-2 rounded-2xl"
+            onclick={onminus}>-</button
+          >
+          <span class="rotate-75">{count}</span>
+          <button
+            type="button"
+            class="bg-green-600 rotate-75 hover:cursor-pointer text-text px-2 rounded-2xl"
+            onclick={onplus}>+</button
+          >
+        </div>
         <button
           type="button"
-          class="bg-red-600 hover:cursor-pointer text-text px-2 rounded-2xl"
-          onclick={onminus}>-</button
-        >
-        {count}
-        <button
-          type="button"
-          class="bg-green-600 hover:cursor-pointer text-text px-2 rounded-2xl"
-          onclick={onplus}>+</button
+          class={[
+            "bg-blue-400 px-1 text-text rounded-2xl rotate-75",
+            sf && "bg-blue-600",
+          ]}
+          onclick={onsf}>SF</button
         >
       </div>
     </div>

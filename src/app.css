@@ -5,3 +5,7 @@
   --color-text: #ffffff;
   --color-accent: rgb(76,76,200);
 }
+
+rotate-75 {
+  rotate: 5deg;
+  }
