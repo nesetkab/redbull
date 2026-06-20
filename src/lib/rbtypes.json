@@ -44,51 +44,11 @@
     "sf": false
   },
   {
-    "label": "redbull",
-    "sf": true
-  },
-  {
-    "label": "peach",
-    "sf": true
-  },
-  {
-    "label": "coconut",
-    "sf": true
-  },
-  {
-    "label": "spring",
-    "sf": true
-  },
-  {
-    "label": "seablue",
-    "sf": true
-  },
-  {
-    "label": "amber",
-    "sf": true
-  },
-  {
-    "label": "yellow",
-    "sf": true
-  },
-  {
-    "label": "summer",
-    "sf": true
-  },
-  {
-    "label": "red",
-    "sf": true
-  },
-  {
-    "label": "pink",
-    "sf": true
-  },
-  {
-    "label": "iced",
-    "sf": true
-  },
-  {
     "label": "zero",
     "sf": true
+  },
+  {
+    "label": "other",
+    "sf": false
   }
 ]

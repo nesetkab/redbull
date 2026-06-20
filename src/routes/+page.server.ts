@@ -5,7 +5,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { fail } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async () => {
-  const allEvents = await db.select().from(events).orderBy(desc(events.createdAt));
+  const allEvents = await db.select().from(events).orderBy(desc(events.createdAt), desc(events.id));
   return { events: allEvents };
 };
 

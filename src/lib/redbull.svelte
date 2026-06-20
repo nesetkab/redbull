@@ -67,7 +67,7 @@
     </div>
   </div>
 {:else}
-  <div>
+  <div class="rise">
     <div
       class={[
         "relative flex flex-col transition-all overflow-visible",

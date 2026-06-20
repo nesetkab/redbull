@@ -9,10 +9,16 @@
   let sfState = $state<Record<string, boolean>>({});
 
   function toggleSf(label: string) {
-    sfState[label] = !sfState[label];
+    if (label === "zero") return;
+    const newSf = !(sfState[label] ?? false);
+    sfState[label] = newSf;
+    for (const c of chosen) {
+      if (c.label === label) c.sf = newSf;
+    }
   }
 
   function currentSf(label: string) {
+    if (label === "zero") return true;
     return sfState[label] ?? false;
   }
 
@@ -35,6 +41,7 @@
 </script>
 
 <form
+  class="rise"
   bind:this={formEl}
   method="POST"
   action="?/create"

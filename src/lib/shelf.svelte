@@ -45,7 +45,7 @@
   });
 </script>
 
-<div class="flex flex-col gap-6 min-w-full mt-5">
+<div class="flex flex-col gap-6 min-w-full mt-5 rise">
   {#each groups as [label, items] (label)}
     <section>
       <h3 class="text-text text-xl mb-2">{label}</h3>
@@ -64,7 +64,7 @@
   {/each}
 </div>
 
-<div class="fixed left-0 max-w-full flex justify-center bottom-2 right-0">
+<div class="fixed left-0 max-w-full flex justify-center bottom-2 right-0 rise">
   <button
     onclick={() => {
       deleting = !deleting;
