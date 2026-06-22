@@ -79,7 +79,6 @@
       ]}
     >
       <img src="{labelPath}.svg" alt="redbull" class="max-w-26" />
-      <span class="text-text text-center">{labelNorm}</span>
       {#if deleting}
         <button
           class="absolute top-0 right-0 bg-red-500 hover:cursor-pointer px-1.5 text-text rounded-full"

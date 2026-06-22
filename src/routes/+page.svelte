@@ -1,11 +1,14 @@
 <script lang="ts">
   import Picker from "$lib/picker.svelte";
   import Shelf from "$lib/shelf.svelte";
+  import Stats from "$lib/stats.svelte";
+  import { getCaffeine } from "$lib/drinks";
 
   let { data } = $props();
   let todayCount = $derived(
     data.events.filter((e) => isSameDate(e.createdAt, new Date())).length,
   );
+
   function isSameDate(a: Date, b: Date) {
     return (
       a.getMonth() == b.getMonth() &&
@@ -26,5 +29,9 @@
     </h2>
   </div>
   <Picker />
-  <Shelf redbulls={data.events} />
+  <div class="min-w-full flex flex-row gap">
+    <Shelf redbulls={data.events} />
+    <div class="flex-grow"></div>
+    <Stats drinks={data.events} />
+  </div>
 </div>

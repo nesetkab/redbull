@@ -1,15 +1,25 @@
 <script lang="ts">
-  import rbtypes from "$lib/rbtypes.json";
+  import drinksJSON from "$lib/drinks.json";
   import Redbull from "./redbull.svelte";
   import { enhance } from "$app/forms";
   import { slide } from "svelte/transition";
 
+  type Drink = { label: string; caffeine: number; sfOnly?: boolean };
+  const drinks = drinksJSON as unknown as Record<string, Drink[]>; // as unknown LMFAO
   let open = $state(false);
-  const labels = [...new Set(rbtypes.map((r) => r.label))];
+
+  const allDrinks = Object.values(drinks).flat();
+  const byLabel = new Map(allDrinks.map((d) => [d.label, d]));
+  const labels = allDrinks.map((d) => d.label);
+
   let sfState = $state<Record<string, boolean>>({});
 
+  function isSfOnly(label: string) {
+    return byLabel.get(label)?.sfOnly ?? false;
+  }
+
   function toggleSf(label: string) {
-    if (label === "zero") return;
+    if (isSfOnly(label)) return true;
     const newSf = !(sfState[label] ?? false);
     sfState[label] = newSf;
     for (const c of chosen) {
@@ -18,7 +28,7 @@
   }
 
   function currentSf(label: string) {
-    if (label === "zero") return true;
+    if (isSfOnly(label)) return true;
     return sfState[label] ?? false;
   }
 

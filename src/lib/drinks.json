@@ -1,0 +1,59 @@
+{
+  "redbull": [
+    {
+      "label": "redbull",
+      "caffeine": 114
+    },
+    {
+      "label": "peach",
+      "caffeine": 114
+    },
+    {
+      "label": "coconut",
+      "caffeine": 114
+    },
+    {
+      "label": "spring",
+      "caffeine": 114
+    },
+    {
+      "label": "seablue",
+      "caffeine": 114
+    },
+    {
+      "label": "amber",
+      "caffeine": 114
+    },
+    {
+      "label": "yellow",
+      "caffeine": 114
+    },
+    {
+      "label": "summer",
+      "caffeine": 114
+    },
+    {
+      "label": "red",
+      "caffeine": 114
+    },
+    {
+      "label": "pink",
+      "caffeine": 114
+    },
+    {
+      "label": "iced",
+      "caffeine": 114
+    },
+    {
+      "label": "zero",
+      "caffeine": 114,
+      "sfOnly": true
+    }
+  ],
+  "coffee": [
+    {
+      "label": "latte",
+      "caffeine": 75
+    }
+  ]
+}
