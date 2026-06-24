@@ -68,8 +68,10 @@
     return best;
   });
 
+  let days = $state(10);
+
   let daily = $derived.by(() => {
-    const DAYS = 10;
+    const DAYS = days;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -133,8 +135,17 @@
       <h1 class="text-xl text-text">total caffeine</h1>
     </div>
   </div>
+  <div class="flex justify-between flex-row">
+    <h1 class="text-xl -mb-3 text-text">drinks in the last {days} days</h1>
+    <div class="flex flex-row gap-1">
+      <span class="text-text opacity-70">days:</span>
+      <input
+        bind:value={days}
+        class="text-text border-white/40 rounded max-w-10 text-center truncate flex border"
+      />
+    </div>
+  </div>
 
-  <h1 class="text-xl -mb-3 text-text">drinks in the last 10 days</h1>
   <div
     class="sm:w-120 xs:w-60 h-64 px-4 py-4 bg-bg rounded-2xl border border-accent"
   >
@@ -146,7 +157,12 @@
       yScale={scaleLinear()}
       yDomain={[0, null]}
       yNice
-      padding={{ top: 8, right: 8, bottom: isMobile ? 28 : 12, left: 24 }}
+      padding={{
+        top: 8,
+        right: 8,
+        bottom: isMobile || days > 24 ? 28 : 12,
+        left: 24,
+      }}
       tooltip={{ mode: "bisect-x" }}
     >
       <Svg>
@@ -171,20 +187,32 @@
           classes={{
             tickLabel: "fill-white",
           }}
-          tickLabelProps={isMobile ? { rotate: -45, textAnchor: "end" } : {}}
+          tickLabelProps={isMobile || (days > 24 && days < 31)
+            ? { rotate: -45, textAnchor: "end" }
+            : days > 30
+              ? { rotate: -90, textAnchor: "end" }
+              : {}}
         />
         <Spline class="stroke-accent stroke-2 fill-none" />
         <Points class="fill-white" />
       </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header
-          >{data.day.toLocaleDateString(undefined, {
+      <Tooltip.Root
+        variant="none"
+        let:data
+        class="bg-bg/50 px-2 text-text border border-accent rounded"
+      >
+        <div class="font-semibold min-w-full text-center">
+          {data.day.toLocaleDateString(undefined, {
             month: "numeric",
             day: "numeric",
           })}
-        </Tooltip.Header>
-        <Tooltip.Item label="drinks" value={data.count} />
-        <Tooltip.Item label="caffeine" value={`${data.caffeine} mg`} />
+        </div>
+        <div class="flex gap-1">
+          <span>{data.count}</span><span class="opacity-70">drinks</span>
+        </div>
+        <div class="flex gap-4">
+          <span>{data.caffeine} mg</span>
+        </div>
       </Tooltip.Root>
     </Chart>
   </div>
