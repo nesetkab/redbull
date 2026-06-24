@@ -2,6 +2,17 @@
   import { getCaffeine } from "./drinks";
   import { Chart, Svg, Axis, Spline, Points, Tooltip } from "layerchart";
   import { scaleTime, scaleLinear } from "d3-scale";
+  import { onMount } from "svelte";
+
+  let isMobile = $state(false);
+
+  onMount(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    isMobile = mq.matches;
+    const handler = (e: MediaQueryListEvent) => (isMobile = e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  });
 
   interface Props {
     drinks: { id: number; label: string; sf: boolean; createdAt: Date }[];
@@ -83,75 +94,50 @@
     }
     return buckets;
   });
-
-  let maxCount = $derived(Math.max(1, ...daily.map((d) => d.count)));
-
-  function smoothPath(
-    data: { count: number }[],
-    w: number,
-    h: number,
-    max: number,
-    tension = 0.5,
-    yOffset = 0,
-  ): string {
-    if (data.length === 0) return "";
-    const xs = data.map((_, i) => (i * w) / (data.length - 1));
-    const ys = data.map((d) => yOffset + h - (d.count / max) * h);
-    let d = `M ${xs[0]},${ys[0]}`;
-    for (let i = 0; i < xs.length - 1; i++) {
-      const x0 = xs[i - 1] ?? xs[i];
-      const y0 = ys[i - 1] ?? ys[i];
-      const x1 = xs[i],
-        y1 = ys[i];
-      const x2 = xs[i + 1],
-        y2 = ys[i + 1];
-      const x3 = xs[i + 2] ?? xs[i + 1];
-      const y3 = ys[i + 2] ?? ys[i + 1];
-
-      const cp1x = x1 + ((x2 - x0) / 6) * tension * 2;
-      const cp1y = y1 + ((y2 - y0) / 6) * tension * 2;
-      const cp2x = x2 - ((x3 - x1) / 6) * tension * 2;
-      const cp2y = y2 - ((y3 - y1) / 6) * tension * 2;
-
-      d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${x2},${y2}`;
-    }
-    return d;
-  }
 </script>
 
-<div class="min-w-fit rise p-4 flex flex-col gap-4 bg-gray-500 rounded-2xl">
-  <h1 class="text-text text-3xl">Statistics:</h1>
-  <div
-    class="bg-blue-400 hover:bg-blue-600 rounded-2xl transition-all max-w-fit p-4"
-  >
-    <h1 class="text-text text-2xl">
-      Current Streak: <span class="font-bold">{currentStreak} days</span>
-    </h1>
-  </div>
-  <div
-    class="bg-blue-400 hover:bg-blue-600 rounded-2xl transition-all max-w-fit p-4"
-  >
-    <h1 class="text-text text-2xl">
-      Longest Streak: <span class="font-bold">{longestStreak} days</span>
-    </h1>
-  </div>
-  <div
-    class="bg-blue-400 hover:bg-blue-600 rounded-2xl transition-all max-w-fit p-4"
-  >
-    <h1 class="text-text text-2xl">
-      Total Count: <span class="font-bold">{totalCount} drinks</span>
-    </h1>
+<div class="min-w-fit h-fit rise p-4 flex flex-col gap-4 bg-stats rounded-2xl">
+  <h1 class="text-text text-3xl">statistics:</h1>
+  <div class="grid grid-cols-2 gap-4">
+    <div
+      class="hover:bg-blue-400 bg-blue-600 rounded-2xl transition-all max-w-full p-4"
+    >
+      <h1 class="text-text text-5xl">
+        {currentStreak} days
+      </h1>
+      <h1 class="text-xl text-text">current streak</h1>
+    </div>
+    <div
+      class="hover:bg-blue-400 bg-blue-600 rounded-2xl transition-all max-w-full p-4"
+    >
+      <h1 class="text-text text-5xl">
+        {longestStreak} days
+      </h1>
+      <h1 class="text-xl text-text">longest streak</h1>
+    </div>
+    <div
+      class="hover:bg-blue-400 bg-blue-600 rounded-2xl transition-all max-w-full p-4"
+    >
+      <h1 class="text-text text-5xl">
+        {totalCount} drinks
+      </h1>
+      <h1 class="text-xl text-text">total drinks</h1>
+    </div>
+
+    <div
+      class="hover:bg-blue-400 bg-blue-600 rounded-2xl transition-all max-w-full p-4"
+    >
+      <h1 class="text-text text-5xl">
+        {totalCaffeine} mg
+      </h1>
+      <h1 class="text-xl text-text">total caffeine</h1>
+    </div>
   </div>
 
+  <h1 class="text-xl -mb-3 text-text">drinks in the last 10 days</h1>
   <div
-    class="bg-blue-400 hover:bg-blue-600 rounded-2xl transition-all max-w-fit p-4"
+    class="sm:w-120 xs:w-60 h-64 px-4 py-4 bg-bg rounded-2xl border border-accent"
   >
-    <h1 class="text-text text-2xl">
-      Total Caffeine: <span class="font-bold">{totalCaffeine} mg</span>
-    </h1>
-  </div>
-
-  <div class="w-120 h-64 px-4 py-4 bg-bg rounded-2xl border border-accent">
     <Chart
       data={daily}
       x="day"
@@ -160,13 +146,14 @@
       yScale={scaleLinear()}
       yDomain={[0, null]}
       yNice
-      padding={{ top: 8, right: 8, bottom: 10, left: 24 }}
+      padding={{ top: 8, right: 8, bottom: isMobile ? 28 : 12, left: 24 }}
       tooltip={{ mode: "bisect-x" }}
     >
       <Svg>
         <Axis
           placement="left"
           grid
+          tickLength={10}
           rule={{ class: "stroke-white/40" }}
           classes={{
             tickLabel: "fill-white",
@@ -174,21 +161,28 @@
         />
         <Axis
           placement="bottom"
+          tickLength={10}
           format={(d) =>
             d.toLocaleDateString(undefined, {
               month: "numeric",
               day: "numeric",
             })}
-          rule={{ class: "stroke-white/40" }}
+          rule={{ class: "stroke-white/40 mt-2" }}
           classes={{
             tickLabel: "fill-white",
           }}
+          tickLabelProps={isMobile ? { rotate: -45, textAnchor: "end" } : {}}
         />
         <Spline class="stroke-accent stroke-2 fill-none" />
         <Points class="fill-white" />
       </Svg>
       <Tooltip.Root let:data>
-        <Tooltip.Header>{data.day}</Tooltip.Header>
+        <Tooltip.Header
+          >{data.day.toLocaleDateString(undefined, {
+            month: "numeric",
+            day: "numeric",
+          })}
+        </Tooltip.Header>
         <Tooltip.Item label="drinks" value={data.count} />
         <Tooltip.Item label="caffeine" value={`${data.caffeine} mg`} />
       </Tooltip.Root>
