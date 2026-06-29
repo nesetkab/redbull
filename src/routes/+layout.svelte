@@ -5,6 +5,7 @@
 </script>
 
 <svelte:head>
+  <title>Caffeine Tracker</title>
   <link rel="icon" href={favicon} />
 </svelte:head>
 

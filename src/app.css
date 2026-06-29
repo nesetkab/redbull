@@ -1,10 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #272829;
+  --color-bag: rgb(188, 58, 78);
+  --color-bg: #272727;
   --color-text: #ffffff;
-  --color-accent: rgb(76,76,200);
+  --color-accent: #157A6E;
+  --color-2: #D33F49;
+  --color-3: #3D5A80;
+  --color-4: #7B6D8D;
+  --color-5: #f8be14;
   --color-stats: #151515;
+  --font-header: "DynaPuff";
+  --font-body: "Playpen Sans";
 }
 
 

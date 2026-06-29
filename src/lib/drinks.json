@@ -52,8 +52,18 @@
   ],
   "coffee": [
     {
-      "label": "latte",
+      "label": "coffee",
       "caffeine": 75
+    }
+  ],
+  "monster": [
+    {
+      "label": "monster",
+      "caffeine": 67
+    },
+    {
+      "label": "monsterjuice",
+      "caffeine": 67
     }
   ]
 }

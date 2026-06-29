@@ -1,13 +1,15 @@
 <script lang="ts">
-  import Redbull from "./redbull.svelte";
+  import Drink from "./drink.svelte";
   import { invalidateAll } from "$app/navigation";
+  import { rbState } from "./deleting.svelte";
 
   interface Props {
     redbulls: { id: number; label: string; sf: boolean; createdAt: Date }[];
   }
 
   let { redbulls }: Props = $props();
-  let deleting = $state(false);
+
+  let deleting = $derived(rbState.deleting);
 
   async function deleteOne(id: number) {
     const form = new FormData();
@@ -45,13 +47,13 @@
   });
 </script>
 
-<div class="flex flex-col gap-6 mt-5 rise">
+<div class="flex flex-col overflow-y-scroll gap-6 mt-5 rise">
   {#each groups as [label, items] (label)}
     <section>
       <h3 class="text-text text-xl mb-2">{label}</h3>
       <div class="flex flex-row flex-wrap gap-2">
         {#each items as redbull (redbull.id)}
-          <Redbull
+          <Drink
             label={redbull.label}
             sf={redbull.sf}
             picker={false}
@@ -62,18 +64,4 @@
       </div>
     </section>
   {/each}
-</div>
-
-<div class="fixed left-0 flex justify-center bottom-2 right-0 rise">
-  <button
-    onclick={() => {
-      deleting = !deleting;
-    }}
-    class={[
-      "hover:cursor-pointer rounded-xl px-2 bg-black max-w-fit text-text",
-      deleting && "bg-red-500",
-    ]}
-  >
-    delete
-  </button>
 </div>

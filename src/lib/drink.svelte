@@ -10,6 +10,7 @@
     onsf?: () => void;
     count?: number;
     deleting?: boolean;
+    category?: string;
   }
 
   let {

@@ -98,46 +98,51 @@
   });
 </script>
 
-<div class="min-w-fit h-fit rise p-4 flex flex-col gap-4 bg-stats rounded-2xl">
-  <h1 class="text-text text-3xl">statistics:</h1>
+<div
+  class="min-w-fit h-fit rise p-4 mt-5 border-2 shadow-[4px_4px_0_0_var(--color-accent)] hover:rotate-[0deg] rotate-[3deg] transition-all flex flex-col gap-4 bg-stats rounded-2xl"
+>
+  <h1 class="text-text text-3xl font-header">the numbers !!</h1>
   <div class="grid grid-cols-2 gap-4">
     <div
-      class="hover:bg-blue-400 bg-blue-600 rounded-2xl transition-all max-w-full p-4"
+      class="border-bg shadow-[4px_4px_0_0_var(--color-text)] bg-2 rotate-[-1deg] hover:rotate-[3deg] rounded-2xl transition-all max-w-full p-4"
     >
-      <h1 class="text-text text-5xl">
+      <h1 class="text-sm opacity-60 text-text">current streak</h1>
+
+      <h1 class="text-text text-3xl">
         {currentStreak} days
       </h1>
-      <h1 class="text-xl text-text">current streak</h1>
     </div>
     <div
-      class="hover:bg-blue-400 bg-blue-600 rounded-2xl transition-all max-w-full p-4"
+      class="bg-3 border-2 shadow-[4px_4px_0_0_var(--color-text)] rotate-[1deg] hover:rotate-[-3deg] rounded-2xl transition-all max-w-full p-4"
     >
-      <h1 class="text-text text-5xl">
+      <h1 class="text-sm opacity-60 text-text">longest streak</h1>
+
+      <h1 class="text-text text-4xl">
         {longestStreak} days
       </h1>
-      <h1 class="text-xl text-text">longest streak</h1>
     </div>
     <div
-      class="hover:bg-blue-400 bg-blue-600 rounded-2xl transition-all max-w-full p-4"
+      class="bg-4 border-bg shadow-[4px_4px_0_0_var(--color-text)] rotate-[-1deg] hover:rotate-[3deg] rounded-2xl transition-all max-w-full p-4"
     >
-      <h1 class="text-text text-5xl">
+      <h1 class="text-sm opacity-60 text-text">total drinks</h1>
+      <h1 class="text-text text-4xl">
         {totalCount} drinks
       </h1>
-      <h1 class="text-xl text-text">total drinks</h1>
     </div>
 
     <div
-      class="hover:bg-blue-400 bg-blue-600 rounded-2xl transition-all max-w-full p-4"
+      class="border-bg shadow-[4px_4px_0_0_var(--color-text)] bg-accent rotate-[1deg] hover:rotate-[-3deg] rounded-2xl transition-all max-w-full p-4"
     >
-      <h1 class="text-text text-5xl">
+      <h1 class="text-sm opacity-60 text-text">total caffeine</h1>
+
+      <h1 class="text-text text-4xl">
         {totalCaffeine} mg
       </h1>
-      <h1 class="text-xl text-text">total caffeine</h1>
     </div>
   </div>
   <div class="flex justify-between flex-row">
     <h1 class="text-xl -mb-3 text-text">drinks in the last {days} days</h1>
-    <div class="flex flex-row gap-1">
+    <div class="gap-1 flex flex-row">
       <span class="text-text opacity-70">days:</span>
       <input
         bind:value={days}
@@ -147,7 +152,7 @@
   </div>
 
   <div
-    class="sm:w-120 xs:w-60 h-64 px-4 py-4 bg-bg rounded-2xl border border-accent"
+    class="sm:w-120 xs:w-60 h-64 px-4 py-4 bg-bg rounded-2xl border-accent border-[2px]"
   >
     <Chart
       data={daily}
@@ -160,7 +165,7 @@
       padding={{
         top: 8,
         right: 8,
-        bottom: isMobile || days > 24 ? 28 : 12,
+        bottom: isMobile ? 28 : 12,
         left: 24,
       }}
       tooltip={{ mode: "bisect-x" }}
@@ -169,6 +174,7 @@
         <Axis
           placement="left"
           grid
+          format={(d) => String(Math.trunc(d))}
           tickLength={10}
           rule={{ class: "stroke-white/40" }}
           classes={{
@@ -178,6 +184,7 @@
         <Axis
           placement="bottom"
           tickLength={10}
+          ticks={isMobile ? 4 : Math.min(Math.round(days / 2), 8)}
           format={(d) =>
             d.toLocaleDateString(undefined, {
               month: "numeric",
@@ -187,13 +194,9 @@
           classes={{
             tickLabel: "fill-white",
           }}
-          tickLabelProps={isMobile || (days > 24 && days < 31)
-            ? { rotate: -45, textAnchor: "end" }
-            : days > 30
-              ? { rotate: -90, textAnchor: "end" }
-              : {}}
+          tickLabelProps={isMobile ? { rotate: -45, textAnchor: "end" } : {}}
         />
-        <Spline class="stroke-accent stroke-2 fill-none" />
+        <Spline class="stroke-accent stroke-[2px] fill-none" />
         <Points class="fill-white" />
       </Svg>
       <Tooltip.Root
