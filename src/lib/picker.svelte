@@ -2,7 +2,7 @@
   import drinksJSON from "$lib/drinks.json";
   import Drink from "./drink.svelte";
   import { enhance } from "$app/forms";
-  import { slide } from "svelte/transition";
+  import { fly, slide } from "svelte/transition";
   import { rbState } from "./deleting.svelte";
   import PickerCat from "./pickerCat.svelte";
 
@@ -109,18 +109,23 @@
       {#each drinks as [key, items]}
         <PickerCat onClick={() => toggleCat(key)} cat={key} />
         {#if isCatOpen(key)}
-          {#each items as item}
-            <Drink
-              category={key}
-              picker={true}
-              label={item.label}
-              sf={currentSf(item.label)}
-              onsf={() => toggleSf(item.label)}
-              count={count(item.label)}
-              onplus={() => plus(item.label)}
-              onminus={() => minus(item.label)}
-              canToggleSf={item.label !== "zero"}
-            />
+          {#each items as item, i}
+            <div
+              in:fly|global={{ y: 50, duration: 300, delay: i * 40 }}
+              out:fly|global={{ y: -10, duration: 200 }}
+            >
+              <Drink
+                category={key}
+                picker={true}
+                label={item.label}
+                sf={currentSf(item.label)}
+                onsf={() => toggleSf(item.label)}
+                count={count(item.label)}
+                onplus={() => plus(item.label)}
+                onminus={() => minus(item.label)}
+                canToggleSf={item.label !== "zero"}
+              />
+            </div>
           {/each}
         {/if}
       {/each}
