@@ -24,6 +24,7 @@
     onsf,
     count,
     deleting,
+    category,
   }: Props = $props();
   let labelNorm = $derived(
     label.at(0)?.toUpperCase() + label.slice(1) + (sf ? " SF" : ""),
@@ -59,12 +60,12 @@
         </div>
         <button
           type="button"
-          class={[canToggleSf && "hover:cursor-pointer", ""]}
-          onclick={onsf}
+          class={[canToggleSf ? "hover:cursor-pointer" : "disabled"]}
+          onclick={canToggleSf ? onsf : null}
           ><img
-            src="{sf ? (canToggleSf ? 'sf' : 'sfhidden') : 's'}.svg"
+            src="{canToggleSf ? (sf ? 'sf' : 's') : 'sfhidden'}.svg"
             alt="sugarfree toggle"
-            class="max-w-6"
+            class="max-w-6 fill-2/0"
           /></button
         >
       </div>

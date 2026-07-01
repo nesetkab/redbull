@@ -1,10 +1,18 @@
 <script lang="ts">
-  import drinksJSON from "$lib/drinks.json";
+  import drinksJSONr from "$lib/drinks.json";
   import Drink from "./drink.svelte";
   import { enhance } from "$app/forms";
   import { fly, slide } from "svelte/transition";
   import { rbState } from "./deleting.svelte";
   import PickerCat from "./pickerCat.svelte";
+
+  type Drink = {
+    label: string;
+    caffeine: number;
+    sfOnly?: boolean;
+  };
+
+  const drinksJSON = drinksJSONr as unknown as Record<string, Drink[]>;
 
   const drinks = Object.entries(drinksJSON);
   const catOpen = $state<Record<string, boolean>>({});
@@ -33,7 +41,7 @@
   }
 
   function isSfOnly(label: string) {
-    return false;
+    return allDrinks.find((d) => d.label === label)?.sfOnly ?? false;
   }
 
   function toggleSf(label: string) {
@@ -106,13 +114,14 @@
       out:slide={{ duration: 400 }}
       class="min-w-full flex-row flex border-accent bg-accent/30 border-[2px] p-4 mt-4 rounded-2xl overflow-scroll gap-2"
     >
-      {#each drinks as [key, items]}
-        <PickerCat onClick={() => toggleCat(key)} cat={key} />
+      {#each drinks as [key, items], n}
+        <PickerCat onClick={() => toggleCat(key)} cat={key} num={n + 3} />
+
         {#if isCatOpen(key)}
           {#each items as item, i}
             <div
               in:fly|global={{ y: 50, duration: 300, delay: i * 40 }}
-              out:fly|global={{ y: -10, duration: 200 }}
+              out:fly|global={{ y: -20, duration: 300 / ((i ^ 2) + 1) }}
             >
               <Drink
                 category={key}
@@ -123,7 +132,7 @@
                 count={count(item.label)}
                 onplus={() => plus(item.label)}
                 onminus={() => minus(item.label)}
-                canToggleSf={item.label !== "zero"}
+                canToggleSf={item.label !== "zero" && key === "redbull"}
               />
             </div>
           {/each}

@@ -54,6 +54,10 @@
     {
       "label": "coffee",
       "caffeine": 75
+    },
+    {
+      "label": "coldbrew",
+      "caffeine": 67
     }
   ],
   "monster": [
@@ -64,6 +68,12 @@
     {
       "label": "monsterjuice",
       "caffeine": 67
+    }
+  ],
+  "other": [
+    {
+      "label": "other",
+      "caffeine": 200
     }
   ]
 }
