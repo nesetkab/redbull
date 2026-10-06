@@ -15,5 +15,5 @@
   transparent)"
   style:border-color="var(--color-{num})"
 >
-  <img src="{cat}.svg" alt="drink category" />
+  <img src="{cat}.svg" alt="{cat} drinks" />
 </button>

@@ -39,7 +39,7 @@
         "flex flex-row justify-center items-center gap-0 max-w-fit  overflow-visible",
       ]}
     >
-      <img src="{labelPath}.svg" alt="redbull" class="max-w-26" />
+      <img src="{labelPath}.svg" alt={labelNorm} class="max-w-26" />
       <div
         class="-rotate-75 gap-2 -ml-12 flex flex-row max-w-fit justify-self-center"
       >
@@ -80,7 +80,7 @@
         !deleting && "hover:-translate-y-4",
       ]}
     >
-      <img src="{labelPath}.svg" alt="redbull" class="max-w-26" />
+      <img src="{labelPath}.svg" alt={labelNorm} class="max-w-26" />
       {#if deleting}
         <button
           class="absolute top-0 right-0 bg-red-500 hover:cursor-pointer px-1.5 text-text rounded-full"

@@ -101,49 +101,49 @@
 <div
   class="min-w-fit h-fit rise p-4 mt-5 border-2 shadow-[4px_4px_0_0_var(--color-accent)] hover:rotate-[0deg] rotate-[3deg] transition-all flex flex-col gap-4 bg-stats rounded-2xl"
 >
-  <h1 class="text-text text-3xl font-header">the numbers !!</h1>
+  <h2 class="text-text text-3xl font-header">the numbers !!</h2>
   <div class="grid grid-cols-2 gap-4">
     <div
       class="border-bg shadow-[4px_4px_0_0_var(--color-text)] bg-2 rotate-[-1deg] hover:rotate-[3deg] rounded-2xl transition-all max-w-full p-4"
     >
-      <h1 class="text-sm opacity-60 text-text">current streak</h1>
+      <p class="text-sm opacity-60 text-text">current streak</p>
 
-      <h1 class="text-text text-3xl">
+      <p class="text-text text-3xl">
         {currentStreak}
         {currentStreak === 1 ? "day" : "days"}
-      </h1>
+      </p>
     </div>
     <div
       class="bg-3 border-2 shadow-[4px_4px_0_0_var(--color-text)] rotate-[1deg] hover:rotate-[-3deg] rounded-2xl transition-all max-w-full p-4"
     >
-      <h1 class="text-sm opacity-60 text-text">longest streak</h1>
+      <p class="text-sm opacity-60 text-text">longest streak</p>
 
-      <h1 class="text-text text-4xl">
+      <p class="text-text text-4xl">
         {longestStreak}
         {longestStreak === 1 ? "day" : "days"}
-      </h1>
+      </p>
     </div>
     <div
       class="bg-4 border-bg shadow-[4px_4px_0_0_var(--color-text)] rotate-[-1deg] hover:rotate-[3deg] rounded-2xl transition-all max-w-full p-4"
     >
-      <h1 class="text-sm opacity-60 text-text">total drinks</h1>
-      <h1 class="text-text text-4xl">
+      <p class="text-sm opacity-60 text-text">total drinks</p>
+      <p class="text-text text-4xl">
         {totalCount} drinks
-      </h1>
+      </p>
     </div>
 
     <div
       class="border-bg shadow-[4px_4px_0_0_var(--color-text)] bg-accent rotate-[1deg] hover:rotate-[-3deg] rounded-2xl transition-all max-w-full p-4"
     >
-      <h1 class="text-sm opacity-60 text-text">total caffeine</h1>
+      <p class="text-sm opacity-60 text-text">total caffeine</p>
 
-      <h1 class="text-text text-4xl">
+      <p class="text-text text-4xl">
         {totalCaffeine} mg
-      </h1>
+      </p>
     </div>
   </div>
   <div class="flex justify-between flex-row">
-    <h1 class="text-xl -mb-3 text-text">drinks in the last {days} days</h1>
+    <h3 class="text-xl -mb-3 text-text">drinks in the last {days} days</h3>
     <div class="gap-1 flex flex-row">
       <span class="text-text opacity-70">days:</span>
       <input
