@@ -22,6 +22,11 @@
 
   let totalCount = $derived(drinks.length);
 
+  function formatCaffeine(mg: number) {
+    if (mg < 1000) return `${mg} mg`;
+    return `${parseFloat((mg / 1000).toFixed(1))} g`;
+  }
+
   let totalCaffeine = $derived(
     drinks.reduce((sum, e) => sum + getCaffeine(e.label), 0),
   );
@@ -138,7 +143,7 @@
       <p class="text-sm opacity-60 text-text">total caffeine</p>
 
       <p class="text-text text-2xl sm:text-4xl whitespace-nowrap">
-        {totalCaffeine} mg
+        {formatCaffeine(totalCaffeine)}
       </p>
     </div>
   </div>
@@ -216,7 +221,7 @@
           <span>{data.count}</span><span class="opacity-70">drinks</span>
         </div>
         <div class="flex gap-4">
-          <span>{data.caffeine} mg</span>
+          <span>{formatCaffeine(data.caffeine)}</span>
         </div>
       </Tooltip.Root>
     </Chart>

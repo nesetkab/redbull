@@ -183,7 +183,7 @@
   {#if open}
     <div
       transition:panel
-      class="min-w-full flex-row flex border-accent bg-accent/30 border-[2px] p-4 mt-4 rounded-2xl overflow-x-auto gap-2"
+      class="min-w-full flex-row flex border-accent bg-accent/30 border-[2px] p-4 mt-4 rounded-2xl overflow-x-auto picker-scroll gap-2"
     >
       {#each drinks as [key, items], n}
         <PickerCat onClick={() => toggleCat(key)} cat={key} num={n + 3} />

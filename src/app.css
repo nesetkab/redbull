@@ -25,3 +25,27 @@
 .rise {
   animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
+
+.picker-scroll::-webkit-scrollbar {
+  height: 12px;
+}
+.picker-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  margin-inline: 16px;
+}
+.picker-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  border-radius: 9999px;
+}
+.picker-scroll::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-accent) 70%, white);
+  background-clip: padding-box;
+}
+@supports not selector(::-webkit-scrollbar) {
+  .picker-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent) transparent;
+  }
+}
