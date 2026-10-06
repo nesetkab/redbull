@@ -2,7 +2,7 @@
   import drinksJSONr from "$lib/drinks.json";
   import Drink from "./drink.svelte";
   import { enhance } from "$app/forms";
-  import { slide } from "svelte/transition";
+  import { fade, slide } from "svelte/transition";
   import { backOut, cubicOut } from "svelte/easing";
   import { rbState } from "./deleting.svelte";
   import PickerCat from "./pickerCat.svelte";
@@ -76,6 +76,13 @@
   }
   let chosen = $state<{ label: string; sf: boolean }[]>([]);
   let formEl: HTMLFormElement;
+  let when = $state("");
+
+  function nowLocal() {
+    const d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 16);
+  }
 
   onMount(() => {
     const srcs = new Set(["plus", "minus", "s", "sf", "sfhidden"]);
@@ -141,8 +148,10 @@
   <button
     type={"button"}
     onclick={() => {
-      if (!open) open = true;
-      else if (chosen.length === 0) open = false;
+      if (!open) {
+        when = nowLocal();
+        open = true;
+      } else if (chosen.length === 0) open = false;
       else formEl.requestSubmit();
     }}
     class="border-accent bg-accent/30 border-[2px] mr-2 mt-4 max-w-fit hover:bg-accent hover:cursor-pointer transition-colors p-3 rounded-2xl text-xl text-text"
@@ -156,6 +165,20 @@
     class="border-5 bg-5/30 border-[2px] mt-4 max-w-fit hover:bg-5/80 hover:cursor-pointer transition-colors p-3 rounded-2xl text-xl text-text"
     >{rbState.deleting ? "stop editing" : "edit drinks"}
   </button>
+  {#if open}
+    <label
+      transition:fade={{ duration: 150 }}
+      class="inline-flex items-center gap-2 mt-4 sm:ml-2 text-xl text-text"
+    >
+      when?
+      <input
+        type="datetime-local"
+        bind:value={when}
+        max={nowLocal()}
+        class="bg-bg border-accent border-[2px] focus:border-5 focus:outline-none transition-colors rounded-2xl p-3 text-lg text-text scheme-dark"
+      />
+    </label>
+  {/if}
 
   {#if open}
     <div
@@ -192,5 +215,6 @@
       {#each labels as label (label)}{/each}
     </div>
     <input type="hidden" name="picks" value={JSON.stringify(chosen)} />
+    <input type="hidden" name="at" value={when ? new Date(when).toISOString() : ""} />
   {/if}
 </form>

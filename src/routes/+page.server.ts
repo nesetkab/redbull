@@ -24,8 +24,18 @@ export const actions: Actions = {
       return fail(400, { error: "u gotta pick one bucko" });
     }
 
+    const at = String(form.get('at') ?? '');
+    const createdAt = at ? new Date(at) : new Date();
+    if (Number.isNaN(createdAt.getTime())) {
+      return fail(400, { error: "bad time :(" });
+    }
+    if (createdAt.getTime() > Date.now() + 60_000) {
+      return fail(400, { error: "no time traveling >:(" });
+    }
+
     const rows = picks.map(p => ({
       userId: locals.userId,
+      createdAt,
       label: String(p.label),
       sf: Boolean(p.sf)
     }));
