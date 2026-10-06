@@ -5,11 +5,12 @@
 
   interface Props {
     redbulls: { id: number; label: string; sf: boolean; createdAt: Date }[];
+    readonly?: boolean;
   }
 
-  let { redbulls }: Props = $props();
+  let { redbulls, readonly = false }: Props = $props();
 
-  let deleting = $derived(rbState.deleting);
+  let deleting = $derived(!readonly && rbState.deleting);
 
   async function deleteOne(id: number) {
     const form = new FormData();
@@ -65,7 +66,7 @@
     </section>
   {:else}
     <p class="text-text opacity-60">
-      no drinks yet.. pick one above to start ur list!
+      {readonly ? "no drinks yet.." : "no drinks yet.. pick one above to start ur list!"}
     </p>
   {/each}
 </div>

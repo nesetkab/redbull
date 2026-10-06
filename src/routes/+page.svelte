@@ -38,6 +38,9 @@
         />
       </h1>
       <h2 class="text-xl text-text">to track ur caffeine addiction</h2>
+      <a href="/neset" class="text-text opacity-60 hover:opacity-100 transition-opacity">
+        see neset's wall →
+      </a>
     </div>
     <div class="flex flex-col">
       <h2 class="text-xl text-text min-w-fit">
