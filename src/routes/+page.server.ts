@@ -1,16 +1,16 @@
 import { db } from "$lib/server/db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 import { events } from "$lib/server/db/schema";
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async () => {
-  const allEvents = await db.select().from(events).orderBy(desc(events.createdAt), desc(events.id));
+export const load: PageServerLoad = async ({ locals }) => {
+  const allEvents = await db.select().from(events).where(eq(events.userId, locals.userId)).orderBy(desc(events.createdAt), desc(events.id));
   return { events: allEvents };
 };
 
 export const actions: Actions = {
-  create: async ({ request }) => {
+  create: async ({ request, locals }) => {
     const form = await request.formData();
     const raw = String(form.get('picks') ?? '[]');
 
@@ -25,6 +25,7 @@ export const actions: Actions = {
     }
 
     const rows = picks.map(p => ({
+      userId: locals.userId,
       label: String(p.label),
       sf: Boolean(p.sf)
     }));
@@ -36,11 +37,11 @@ export const actions: Actions = {
 
     return { success: true, created };
   },
-  delete: async ({ request }) => {
+  delete: async ({ request, locals }) => {
     const form = await request.formData();
     const id = Number(form.get('id'));
     if (!Number.isFinite(id)) return fail(400, { error: "bad id" })
-    await db.delete(events).where(eq(events.id, id));
+    await db.delete(events).where(and(eq(events.id, id), eq(events.userId, locals.userId)));
     return { success: true };
   },
 };

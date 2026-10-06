@@ -63,5 +63,9 @@
         {/each}
       </div>
     </section>
+  {:else}
+    <p class="text-text opacity-60">
+      no drinks yet.. pick one above to start ur list!
+    </p>
   {/each}
 </div>
