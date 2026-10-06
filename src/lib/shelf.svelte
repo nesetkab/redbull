@@ -48,7 +48,7 @@
   });
 </script>
 
-<div class="flex flex-col overflow-y-scroll gap-6 mt-5 rise">
+<div class="flex flex-col overflow-y-auto gap-6 mt-5 rise">
   {#each groups as [label, items] (label)}
     <section>
       <h3 class="text-text text-xl mb-2">{label}</h3>

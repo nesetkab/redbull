@@ -2,6 +2,7 @@
   import Picker from "$lib/picker.svelte";
   import Shelf from "$lib/shelf.svelte";
   import Stats from "$lib/stats.svelte";
+  import Intro from "$lib/intro.svelte";
 
   let { data } = $props();
   let todayCount = $derived(
@@ -60,3 +61,4 @@
     </div>
   </div>
 </div>
+<Intro />
