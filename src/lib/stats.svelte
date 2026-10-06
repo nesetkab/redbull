@@ -108,7 +108,7 @@
     >
       <p class="text-sm opacity-60 text-text">current streak</p>
 
-      <p class="text-text text-3xl">
+      <p class="text-text text-2xl sm:text-3xl whitespace-nowrap">
         {currentStreak}
         {currentStreak === 1 ? "day" : "days"}
       </p>
@@ -118,7 +118,7 @@
     >
       <p class="text-sm opacity-60 text-text">longest streak</p>
 
-      <p class="text-text text-4xl">
+      <p class="text-text text-2xl sm:text-4xl whitespace-nowrap">
         {longestStreak}
         {longestStreak === 1 ? "day" : "days"}
       </p>
@@ -127,7 +127,7 @@
       class="bg-4 border-bg shadow-[4px_4px_0_0_var(--color-text)] rotate-[-1deg] hover:rotate-[3deg] rounded-2xl transition-all max-w-full p-4"
     >
       <p class="text-sm opacity-60 text-text">total drinks</p>
-      <p class="text-text text-4xl">
+      <p class="text-text text-2xl sm:text-4xl whitespace-nowrap">
         {totalCount} drinks
       </p>
     </div>
@@ -137,7 +137,7 @@
     >
       <p class="text-sm opacity-60 text-text">total caffeine</p>
 
-      <p class="text-text text-4xl">
+      <p class="text-text text-2xl sm:text-4xl whitespace-nowrap">
         {totalCaffeine} mg
       </p>
     </div>

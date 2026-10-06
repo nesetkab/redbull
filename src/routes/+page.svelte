@@ -55,6 +55,8 @@
   <div class="min-w-full flex flex-col md:flex-row sm gap">
     <Shelf redbulls={data.events} />
     <div class="flex-grow"></div>
-    <Stats drinks={data.events} />
+    <div class="order-first md:order-none">
+      <Stats drinks={data.events} />
+    </div>
   </div>
 </div>
