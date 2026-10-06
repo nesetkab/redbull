@@ -2,9 +2,11 @@
   import drinksJSONr from "$lib/drinks.json";
   import Drink from "./drink.svelte";
   import { enhance } from "$app/forms";
-  import { fly, slide } from "svelte/transition";
+  import { slide } from "svelte/transition";
+  import { backOut, cubicOut } from "svelte/easing";
   import { rbState } from "./deleting.svelte";
   import PickerCat from "./pickerCat.svelte";
+  import { onMount } from "svelte";
 
   type Drink = {
     label: string;
@@ -74,6 +76,53 @@
   }
   let chosen = $state<{ label: string; sf: boolean }[]>([]);
   let formEl: HTMLFormElement;
+
+  onMount(() => {
+    const srcs = new Set(["plus", "minus", "s", "sf", "sfhidden"]);
+    for (const [key, items] of drinks) {
+      srcs.add(key);
+      for (const item of items) {
+        if (!item.sfOnly) srcs.add(item.label);
+        if (item.sfOnly || key === "redbull") srcs.add(`${item.label}sf`);
+      }
+    }
+    for (const src of srcs) new Image().src = `${src}.svg`;
+  });
+
+  function reducedMotion() {
+    return matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function panel(node: HTMLElement) {
+    if (reducedMotion()) return { duration: 0 };
+    const base = slide(node, { duration: 320, easing: cubicOut });
+    return {
+      ...base,
+      css: (t: number, u: number) => `${base.css!(t, u)};opacity:${t};`,
+    };
+  }
+
+  function unfold(node: HTMLElement, { delay = 0, duration = 380 } = {}) {
+    if (reducedMotion()) return { duration: 0 };
+    const width = node.offsetWidth;
+    const gap = parseFloat(getComputedStyle(node.parentElement!).columnGap) || 0;
+    return {
+      delay,
+      duration,
+      css: (t: number) => {
+        const grow = cubicOut(t);
+        const pop = backOut(t);
+        return `
+          width:${grow * width}px;
+          margin-left:${(grow - 1) * gap}px;
+          overflow-x:clip;
+          opacity:${Math.min(t * 2, 1)};
+          transform:translateY(${(1 - pop) * 16}px) scale(${0.6 + 0.4 * pop});
+          transform-origin:left bottom;
+        `;
+      },
+    };
+  }
 </script>
 
 <form
@@ -110,33 +159,35 @@
 
   {#if open}
     <div
-      in:slide={{ duration: 400 }}
-      out:slide={{ duration: 400 }}
+      transition:panel
       class="min-w-full flex-row flex border-accent bg-accent/30 border-[2px] p-4 mt-4 rounded-2xl overflow-scroll gap-2"
     >
       {#each drinks as [key, items], n}
         <PickerCat onClick={() => toggleCat(key)} cat={key} num={n + 3} />
 
-        {#if isCatOpen(key)}
-          {#each items as item, i}
+        {#each items as item, i}
+          {#if isCatOpen(key)}
             <div
-              in:fly|global={{ y: 50, duration: 300, delay: i * 40 }}
-              out:fly|global={{ y: -20, duration: 300 / ((i ^ 2) + 1) }}
+              class="shrink-0"
+              in:unfold={{ delay: i * 35 }}
+              out:unfold={{ delay: (items.length - 1 - i) * 20, duration: 240 }}
             >
-              <Drink
-                category={key}
-                picker={true}
-                label={item.label}
-                sf={currentSf(item.label)}
-                onsf={() => toggleSf(item.label)}
-                count={count(item.label)}
-                onplus={() => plus(item.label)}
-                onminus={() => minus(item.label)}
-                canToggleSf={item.label !== "zero" && key === "redbull"}
-              />
+              <div class="w-max">
+                <Drink
+                  category={key}
+                  picker={true}
+                  label={item.label}
+                  sf={currentSf(item.label)}
+                  onsf={() => toggleSf(item.label)}
+                  count={count(item.label)}
+                  onplus={() => plus(item.label)}
+                  onminus={() => minus(item.label)}
+                  canToggleSf={item.label !== "zero" && key === "redbull"}
+                />
+              </div>
             </div>
-          {/each}
-        {/if}
+          {/if}
+        {/each}
       {/each}
       {#each labels as label (label)}{/each}
     </div>
