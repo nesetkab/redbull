@@ -109,7 +109,8 @@
       <h1 class="text-sm opacity-60 text-text">current streak</h1>
 
       <h1 class="text-text text-3xl">
-        {currentStreak} days
+        {currentStreak}
+        {currentStreak === 1 ? "day" : "days"}
       </h1>
     </div>
     <div
@@ -118,7 +119,8 @@
       <h1 class="text-sm opacity-60 text-text">longest streak</h1>
 
       <h1 class="text-text text-4xl">
-        {longestStreak} days
+        {longestStreak}
+        {longestStreak === 1 ? "day" : "days"}
       </h1>
     </div>
     <div
@@ -160,7 +162,7 @@
       xScale={scaleTime()}
       y="count"
       yScale={scaleLinear()}
-      yDomain={[0, null]}
+      yDomain={[0, Math.max(4, ...daily.map((d) => d.count))]}
       yNice
       padding={{
         top: 8,

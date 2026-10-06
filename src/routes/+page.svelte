@@ -37,7 +37,7 @@
           class="ml-2 -mt-6 hidden sm:inline max-h-14"
         />
       </h1>
-      <h2 class="text-xl text-text">to track my caffeine addiction</h2>
+      <h2 class="text-xl text-text">to track ur caffeine addiction</h2>
     </div>
     <div class="flex flex-col">
       <h2 class="text-xl text-text min-w-fit">
