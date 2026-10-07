@@ -1,6 +1,7 @@
 <script lang="ts">
   import Drink from "./drink.svelte";
   import { invalidateAll } from "$app/navigation";
+  import { deserialize } from "$app/forms";
   import { rbState } from "./deleting.svelte";
 
   interface Props {
@@ -11,12 +12,27 @@
   let { redbulls, readonly = false }: Props = $props();
 
   let deleting = $derived(!readonly && rbState.deleting);
+  let error = $state("");
 
   async function deleteOne(id: number) {
+    error = "";
     const form = new FormData();
     form.set("id", String(id));
-    await fetch("/?/delete", { method: "POST", body: form });
-    await invalidateAll();
+    try {
+      const response = await fetch("/?/delete", {
+        method: "POST",
+        body: form,
+        headers: { "x-sveltekit-action": "true" },
+      });
+      const result = deserialize(await response.text());
+      if (result.type !== "success") {
+        error = "couldn't delete that one :(";
+        return;
+      }
+      await invalidateAll();
+    } catch {
+      error = "couldn't delete that one :(";
+    }
   }
 
   function label(d: Date) {
@@ -49,6 +65,9 @@
 </script>
 
 <div class="flex flex-col overflow-y-auto gap-6 mt-5 rise">
+  {#if error}
+    <p class="text-2" role="alert">{error}</p>
+  {/if}
   {#each groups as [label, items] (label)}
     <section>
       <h3 class="text-text text-xl mb-2">{label}</h3>

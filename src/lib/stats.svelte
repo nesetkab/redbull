@@ -31,6 +31,10 @@
     drinks.reduce((sum, e) => sum + getCaffeine(e.label), 0),
   );
 
+  function isNextDay(a: number, b: number) {
+    return Math.round((b - a) / 86_400_000) === 1;
+  }
+
   function getDaysAscending() {
     return [
       ...new Set(
@@ -52,7 +56,7 @@
     if (days[days.length - 1] !== today) return 0;
     let streak = 1;
     for (let i = days.length - 1; i > 0; i--) {
-      if (days[i] - days[i - 1] === 86_400_000) streak++;
+      if (isNextDay(days[i - 1], days[i])) streak++;
       else break;
     }
     return streak;
@@ -66,17 +70,18 @@
     let best = 1,
       run = 1;
     for (let i = 1; i < days.length; i++) {
-      if (days[i] - days[i - 1] === 86_400_000) run++;
+      if (isNextDay(days[i - 1], days[i])) run++;
       else run = 1;
       if (run > best) best = run;
     }
     return best;
   });
 
-  let days = $state(10);
+  let days = $state<number | null>(10);
+  let span = $derived(Math.min(365, Math.max(1, Math.floor(Number(days)) || 10)));
 
   let daily = $derived.by(() => {
-    const DAYS = days;
+    const DAYS = span;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -148,12 +153,16 @@
     </div>
   </div>
   <div class="flex justify-between flex-row">
-    <h3 class="text-xl -mb-3 text-text">drinks in the last {days} days</h3>
+    <h3 class="text-xl -mb-3 text-text">drinks in the last {span} {span === 1 ? "day" : "days"}</h3>
     <div class="gap-1 flex flex-row">
       <span class="text-text opacity-70">days:</span>
       <input
+        type="number"
+        min="1"
+        max="365"
+        inputmode="numeric"
         bind:value={days}
-        class="text-text border-white/40 rounded max-w-10 text-center truncate flex border"
+        class="text-text border-white/40 rounded max-w-10 text-center truncate flex border [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
       />
     </div>
   </div>
@@ -191,7 +200,7 @@
         <Axis
           placement="bottom"
           tickLength={10}
-          ticks={isMobile ? 4 : Math.min(Math.round(days / 2), 8)}
+          ticks={isMobile ? 4 : Math.min(Math.round(span / 2), 8)}
           format={(d) =>
             d.toLocaleDateString(undefined, {
               month: "numeric",

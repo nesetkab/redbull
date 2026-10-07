@@ -10,7 +10,6 @@
     onsf?: () => void;
     count?: number;
     deleting?: boolean;
-    category?: string;
   }
 
   let {
@@ -24,7 +23,6 @@
     onsf,
     count,
     deleting,
-    category,
   }: Props = $props();
   let labelNorm = $derived(
     label.at(0)?.toUpperCase() + label.slice(1) + (sf ? " SF" : ""),

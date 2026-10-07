@@ -1,13 +1,19 @@
 import { env } from '$env/dynamic/private';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { createHash, timingSafeEqual } from 'node:crypto';
+
+function matches(a: string, b: string) {
+  const hash = (s: string) => createHash('sha256').update(s).digest();
+  return timingSafeEqual(hash(a), hash(b));
+}
 
 export const actions: Actions = {
   default: async ({ request, cookies }) => {
     const form = await request.formData();
     const password = String(form.get('password') ?? '');
 
-    if (!env.OWNER_ID || !env.OWNER_PASSWORD || password !== env.OWNER_PASSWORD) {
+    if (!env.OWNER_ID || !env.OWNER_PASSWORD || !matches(password, env.OWNER_PASSWORD)) {
       return fail(401, { error: 'wrong password :(' });
     }
 
