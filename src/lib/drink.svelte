@@ -48,7 +48,7 @@
             onclick={onminus}
             ><img src="minus.svg" alt="minus" class="max-w-6" /></button
           >
-          <span class="rotate-75">{count}</span>
+          <span class="rotate-75 inline-block w-6 text-center tabular-nums">{count}</span>
           <button
             type="button"
             class=" hover:cursor-pointer text-text min-w-fit"
